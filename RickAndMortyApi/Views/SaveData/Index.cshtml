@@ -2,7 +2,7 @@
 @using X.PagedList.Mvc.Core.Common
 @using X.PagedList.Mvc.Core
 @{
-    Layout = null;
+    Layout = "~/Views/UILayout/Index.cshtml"; ;
 }
 
 <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
                         <p class="card-text">@item.Url</p>
                         <p class="card-text">@item.Created.ToString("dd/yyyy")</p>
 
-                        <p class="card-text">Bölüm:<span class="badge badge-secondary">@item.EpisodeCode</span> </p>
+                        <p class="card-text">Bölüm:<span class="badge badge-secondary"> asdasd @item.EpisodeCode</span> </p>
                     </div>
                 </div>
             </div>

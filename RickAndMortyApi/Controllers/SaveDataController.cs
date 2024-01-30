@@ -21,8 +21,12 @@ namespace RickAndMortyApi.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index(int page=1)
+        public async Task<IActionResult> Index(int page = 1)
         {
+            ViewBag.t = "Bölümler";
+            ViewBag.t1 = "Anasayfa";
+            ViewBag.t2 = "Bölümler";
+
             var client = _client.CreateClient();
 
 
@@ -33,6 +37,7 @@ namespace RickAndMortyApi.Controllers
             };
             using (var response = await client.SendAsync(request))
             {
+
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<EpisodeViewModel.Rootobject>(body);
@@ -50,7 +55,7 @@ namespace RickAndMortyApi.Controllers
                 //    _context.Episodes.Add(episode);
                 //}
                 //await _context.SaveChangesAsync();
-                var values1 = _context.Episodes.ToList().ToPagedList(page,6);
+                var values1 = _context.Episodes.ToList().ToPagedList(page, 6);
                 return View(values1);
 
             }
@@ -59,12 +64,12 @@ namespace RickAndMortyApi.Controllers
         public async Task<IActionResult> GetCharacters(int id)
         {
             var client = _client.CreateClient();
-             
+
 
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://rickandmortyapi.com/api/episode")
+                RequestUri = new Uri("https://rickandmortyapi.com/api/character")
             };
             using (var response = await client.SendAsync(request))
             {
