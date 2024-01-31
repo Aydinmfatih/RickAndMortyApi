@@ -26,7 +26,6 @@ namespace RickAndMortyApi.Controllers
         {
             using (var client = new HttpClient())
             {
-                // Episode bilgilerini API'den çekme
                 var episodeRequest = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
@@ -39,7 +38,6 @@ namespace RickAndMortyApi.Controllers
                     var body = await episodeResponse.Content.ReadAsStringAsync();
                     var values = JsonConvert.DeserializeObject<EpisodeViewModel.Rootobject>(body);
 
-                    // Episode verilerini veritabanına kaydetme
                     foreach (var item in values.results)
                     {
                         var episode = new Episode
@@ -51,26 +49,24 @@ namespace RickAndMortyApi.Controllers
                             Created = item.created
                         };
 
-                        // Bunu veritabanına ekleyin
                         _context.Episodes.Add(episode);
                         await _context.SaveChangesAsync();
 
-                        // Character verilerini API'den çekme
                         foreach (var characterUrl in item.characters)
                         {
                             var characterResponse = await client.GetStringAsync(characterUrl);
-                            var characterViewModel = JsonConvert.DeserializeObject<CharacterViewModel.Rootobject>(characterResponse);
+                            var value = JsonConvert.DeserializeObject<CharacterViewModel.Rootobject>(characterResponse);
 
                             var character = new Character
                             {
-                                Name = characterViewModel.name,
-                                Status = characterViewModel.status,
-                                Species = characterViewModel.species,
-                                Type = characterViewModel.type,
-                                Gender = characterViewModel.gender,
-                                Image = characterViewModel.image,
-                                Url = characterViewModel.url,
-                                Created = characterViewModel.created
+                                Name = value.name,
+                                Status = value.status,
+                                Species = value.species,
+                                Type = value.type,
+                                Gender = value.gender,
+                                Image = value.image,
+                                Url = value.url,
+                                Created = value.created
                             };
 
                             _context.Characters.Add(character);

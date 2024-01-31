@@ -1,0 +1,64 @@
+﻿@using RickAndMortyApi.Dtos
+@model GetCharacterByIdDto
+@{
+    ViewData["Title"] = "GetCharacterById";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<style>
+    .custom-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .custom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+            .pagination a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+        }
+</style>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card custom-card" style="padding:10px">
+                <img style="width:600px;height:250px" src="@Model.Image" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Gender</p>
+                    <p class="card-text">@Model.Created.ToString("dd/yyyy")</p>
+                    <p class="card-text">@Model.Species</p>
+                    <p class="card-text">@Model.Type</p>
+                    <p class="card-text">@Model.Status</p>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+

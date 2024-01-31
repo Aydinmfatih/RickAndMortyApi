@@ -31,6 +31,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=SaveData}/{action=Index}/{id?}");
+    pattern: "{controller=Episode}/{action=Index}/{id?}");
 
 app.Run();

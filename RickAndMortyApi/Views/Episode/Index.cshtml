@@ -1,0 +1,121 @@
+﻿@model X.PagedList.IPagedList<ResultEpisodeDto>
+@using RickAndMortyApi.Dtos
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Mvc.Core
+@{
+    Layout = "~/Views/UILayout/Index.cshtml"; ;
+}
+
+<style>
+    .custom-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .custom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            color: #007bff;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+            .pagination a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+        }
+</style>
+<div class="container mt-5" id="episodeContainer">
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Bölüm adıyla ara">
+    <div class="row" id="episodeList">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4">
+                <div class="card custom-card" style="padding:10px">
+                    <img style="width:400px;heigth:200px" src="https://deadline.com/wp-content/uploads/2023/12/rick-and-morty-season-7-finale.jpg" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Url</p>
+                        <p class="card-text">@item.Created.ToString("dd/yyyy")</p>
+                        <p class="card-text">Bölüm: @item.EpisodeCode</p>
+                        <a href="/Episode/GetEpisodeById/@item.EpisodeId" class="btn btn-primary">Bölüme git</a>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-12">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var searchKeyword = $(this).val();
+
+            $.ajax({
+                url: "/Episode/Search",
+                method: "GET",
+                data: { search: searchKeyword },
+                dataType: "json",
+                success: function (result) {
+                    if (result && result.length > 0) {
+                        updateEpisodeList(result);
+                    } else {
+                        console.error("Arama sonuçları boş veya hatalı.");
+                    }
+                },
+                error: function (error) {
+                    console.error("Arama sırasında hata oluştu:", error);
+                }
+            });
+        });
+
+        function updateEpisodeList(searchResults) {
+            $("#episodeList").empty();
+
+            for (var i = 0; i < searchResults.length; i++) {
+                var item = searchResults[i];
+                console.log(item);
+
+                var cardHtml = `
+                    <div class="col-md-4">
+                        <div class="card custom-card" style="padding:10px">
+                            <img style="width:400px;height:200px" src="https://deadline.com/wp-content/uploads/2023/12/rick-and-morty-season-7-finale.jpg" class="card-img-top" alt="Card Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.Name || ''}</h5>
+                                <p class="card-text">${item.Url || ''}</p>
+                                <p class="card-text">${item.Created ? new Date(item.Created).toLocaleDateString() : ''}</p>
+                                <p class="card-text">Bölüm: ${item.EpisodeCode || ''}</p>
+                                <a href="/Episode/GetEpisodeById/${item.EpisodeId || ''}" class="btn btn-primary">Bölüme git</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                $("#episodeList").append(cardHtml);
+            }
+        }
+    });
+
+</script>

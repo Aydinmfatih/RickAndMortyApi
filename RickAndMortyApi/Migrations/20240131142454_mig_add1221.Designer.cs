@@ -12,7 +12,7 @@ using RickAndMortyApi.DAL.Context;
 namespace RickAndMortyApi.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240131131029_mig_add1221")]
+    [Migration("20240131142454_mig_add1221")]
     partial class mig_add1221
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
