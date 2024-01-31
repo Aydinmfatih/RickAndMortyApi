@@ -39,7 +39,8 @@
             color: white;
         }
 </style>
-<div class="container mt-5">
+<div class="container mt-5" id="episodeContainer">
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Ara">
     <div class="row">
         @foreach (var item in Model)
         {
@@ -49,12 +50,28 @@
                     <img style="width:400px;height:200px" src="@item.Image" class="card-img-top" alt="Card Image">
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Url</p>
                         <p class="card-text">@item.Created.ToString("dd/yyyy")</p>
                         <p class="card-text">@item.Gender</p>
 
                         <p class="card-text">:  @item.Species </p>
                         <a href="/Character/GetCharacterById/@item.CharacterId" class="btn btn-primary">Karaktere git</a>
+                        <form method="post">
+                            <a href="/Character/ToggleFavorite/@item.CharacterId" class="btn btn-secondary favorite-toggle-btn">
+                                @if (item.IsFavorite==true)
+                                {
+                                    <span style="color:blue">Favoriden Kaldır</span>
+                                }
+                                else
+                                {
+                                    <span>Favoriye Ekle</span>
+                                }
+                            </a>
+
+                            <input type="hidden" name="CharacterId" value="@item.CharacterId" />
+
+                        </form>
+                       
+                        
                     </div>
                 </div>
             </div>
@@ -69,3 +86,56 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var searchKeyword = $(this).val();
+
+            $.ajax({
+                url: "/Character/Search",
+                method: "GET",
+                data: { search: searchKeyword },
+                dataType: "json",
+                success: function (result) {
+                    if (result && result.length > 0) {
+                        updateCharacterList(result);
+                    } else {
+                        console.error("Arama sonuçları boş veya hatalı.");
+                    }
+                },
+                error: function (error) {
+                    console.error("Arama sırasında hata oluştu:", error);
+                }
+            });
+        });
+
+        function updateCharacterList(searchResults) {
+            $(".custom-card").remove(); // Remove existing character cards
+
+            for (var i = 0; i < searchResults.length; i++) {
+                var item = searchResults[i];
+
+                var cardHtml = `
+                            <div class="col-md-4">
+                                <div class="card custom-card" style="padding:10px">
+                                    <img style="width:400px;height:200px" src="${item.Image}" class="card-img-top" alt="Card Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${item.Name}</h5>
+                                        <p class="card-text">${item.Url}</p>
+                                        <p class="card-text">${item.Created ? new Date(item.Created).toLocaleDateString() : ''}</p>
+                                        <p class="card-text">${item.Gender}</p>
+                                        <p class="card-text">${item.Species}</p>
+                                        <a href="/Character/GetCharacterById/${item.CharacterId}" class="btn btn-primary">Karaktere git</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                $(".row").append(cardHtml);
+            }
+        }
+    });
+   
+
+</script>

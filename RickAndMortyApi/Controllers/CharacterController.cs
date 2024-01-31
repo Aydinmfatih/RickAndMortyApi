@@ -64,5 +64,43 @@ namespace RickAndMortyApi.Controllers
                 }
             }
         }
+        [HttpPost]
+        public IActionResult ToggleFavorite(int characterId)
+        {
+            var character = _context.Characters.FirstOrDefault(x => x.CharacterId == characterId);
+            if (character != null)
+            {
+                if (character.IsFavorite)
+                {
+                    character.IsFavorite = false;
+                }
+                else
+                {
+                    var favoritedCount = _context.Characters.Count(x => x.IsFavorite);
+
+                    if (favoritedCount < 10)
+                    {
+                        character.IsFavorite = true;
+                    }
+                    else
+                    {
+                        return Json(new { Success = false, Message = "Favori karakter ekleme sayısını aştınız. Başka bir karakteri favorilerden çıkarmalısınız." });
+                    }
+                }
+                _context.SaveChanges();
+
+                return Json(new { Success = true });
+
+            }
+            return Json(new { Success = false, Message = "Karakter bulunamadı." });
+        }
+        public IActionResult Search(string search)
+        {
+            var searchResults = _context.Characters
+                .Where(e => e.Name.ToLower().Contains(search.ToLower()))
+                .ToList();
+
+            return Json(searchResults);
+        }
     }
 }

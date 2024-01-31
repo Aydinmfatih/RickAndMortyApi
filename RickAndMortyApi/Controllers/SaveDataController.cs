@@ -22,6 +22,7 @@ namespace RickAndMortyApi.Controllers
             _mapper = mapper;
         }
 
+        //Episode Api request atarak gelen Episode ve Characters[] dizisini Db ye kaydedip Many To Many ilişkisi olduğu için Ulaşabilmek adına Sun table a kaydediyor.
         public async Task<IActionResult> Index(int page = 1)
         {
             using (var client = new HttpClient())
@@ -86,7 +87,6 @@ namespace RickAndMortyApi.Controllers
                     return View();
                 }
             }
-
             //private int GetCharacterIdFromUrl(string characterUrl)
             //{
             //    if (string.IsNullOrEmpty(characterUrl))

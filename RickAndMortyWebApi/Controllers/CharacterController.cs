@@ -24,6 +24,7 @@ namespace RickAndMortyWebApi.Controllers
 
         }
 
+
         [HttpGet("{id}")]
         public IActionResult GetCharacterById(int id)
         {

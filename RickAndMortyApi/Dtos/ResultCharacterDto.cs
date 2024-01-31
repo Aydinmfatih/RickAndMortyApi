@@ -10,6 +10,7 @@
         public string? Gender { get; set; }
         public string Image { get; set; }
         public string Url { get; set; }
+        public bool IsFavorite { get; set; }
         public DateTime Created { get; set; }
 
 

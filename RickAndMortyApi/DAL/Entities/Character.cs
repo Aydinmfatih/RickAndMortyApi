@@ -13,6 +13,7 @@ namespace RickAndMortyApi.DAL.Entities
         public string Image { get; set; }
         public string Url { get; set; }
         public DateTime Created { get; set; }
+        public bool IsFavorite { get; set; }
 
         public List<CharacterEpisode> characterEpisodes { get; set; }
     }
