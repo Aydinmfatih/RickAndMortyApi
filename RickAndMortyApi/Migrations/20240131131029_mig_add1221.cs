@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RickAndMortyApi.Migrations
 {
-    public partial class mig_1 : Migration
+    public partial class mig_add1221 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,27 +13,27 @@ namespace RickAndMortyApi.Migrations
                 name: "Characters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CharacterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Species = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Characters", x => x.Id);
+                    table.PrimaryKey("PK_Characters", x => x.CharacterId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Episodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    EpisodeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AirDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -43,43 +43,50 @@ namespace RickAndMortyApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Episodes", x => x.Id);
+                    table.PrimaryKey("PK_Episodes", x => x.EpisodeId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterEpisode",
+                name: "CharacterEpisodes",
                 columns: table => new
                 {
-                    CharactersId = table.Column<int>(type: "int", nullable: false),
-                    EpisodesId = table.Column<int>(type: "int", nullable: false)
+                    CharacterEpisodeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CharacterId = table.Column<int>(type: "int", nullable: false),
+                    EpisodeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterEpisode", x => new { x.CharactersId, x.EpisodesId });
+                    table.PrimaryKey("PK_CharacterEpisodes", x => x.CharacterEpisodeId);
                     table.ForeignKey(
-                        name: "FK_CharacterEpisode_Characters_CharactersId",
-                        column: x => x.CharactersId,
+                        name: "FK_CharacterEpisodes_Characters_CharacterId",
+                        column: x => x.CharacterId,
                         principalTable: "Characters",
-                        principalColumn: "Id",
+                        principalColumn: "CharacterId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterEpisode_Episodes_EpisodesId",
-                        column: x => x.EpisodesId,
+                        name: "FK_CharacterEpisodes_Episodes_EpisodeId",
+                        column: x => x.EpisodeId,
                         principalTable: "Episodes",
-                        principalColumn: "Id",
+                        principalColumn: "EpisodeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterEpisode_EpisodesId",
-                table: "CharacterEpisode",
-                column: "EpisodesId");
+                name: "IX_CharacterEpisodes_CharacterId",
+                table: "CharacterEpisodes",
+                column: "CharacterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterEpisodes_EpisodeId",
+                table: "CharacterEpisodes",
+                column: "EpisodeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CharacterEpisode");
+                name: "CharacterEpisodes");
 
             migrationBuilder.DropTable(
                 name: "Characters");

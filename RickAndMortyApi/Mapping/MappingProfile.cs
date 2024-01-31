@@ -8,7 +8,9 @@ namespace RickAndMortyApi.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Episode,EpisodeViewModel.Result>().ReverseMap();
+            CreateMap<EpisodeViewModel.Result, Episode>().ReverseMap();
+            CreateMap<CharacterViewModel.Rootobject, Character>().ReverseMap();
+            CreateMap<CharacterEpisode, CharacterEpisode>().ReverseMap();
         }
     }
 }

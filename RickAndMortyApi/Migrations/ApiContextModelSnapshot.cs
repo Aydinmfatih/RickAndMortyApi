@@ -22,34 +22,18 @@ namespace RickAndMortyApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CharacterEpisode", b =>
-                {
-                    b.Property<int>("CharactersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EpisodesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CharactersId", "EpisodesId");
-
-                    b.HasIndex("EpisodesId");
-
-                    b.ToTable("CharacterEpisode");
-                });
-
             modelBuilder.Entity("RickAndMortyApi.DAL.Entities.Character", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CharacterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"), 1L, 1);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
@@ -76,18 +60,41 @@ namespace RickAndMortyApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CharacterId");
 
                     b.ToTable("Characters");
                 });
 
-            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.Episode", b =>
+            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.CharacterEpisode", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CharacterEpisodeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterEpisodeId"), 1L, 1);
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EpisodeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterEpisodeId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("EpisodeId");
+
+                    b.ToTable("CharacterEpisodes");
+                });
+
+            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.Episode", b =>
+                {
+                    b.Property<int>("EpisodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EpisodeId"), 1L, 1);
 
                     b.Property<string>("AirDate")
                         .IsRequired()
@@ -108,24 +115,38 @@ namespace RickAndMortyApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EpisodeId");
 
                     b.ToTable("Episodes");
                 });
 
-            modelBuilder.Entity("CharacterEpisode", b =>
+            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.CharacterEpisode", b =>
                 {
-                    b.HasOne("RickAndMortyApi.DAL.Entities.Character", null)
-                        .WithMany()
-                        .HasForeignKey("CharactersId")
+                    b.HasOne("RickAndMortyApi.DAL.Entities.Character", "Character")
+                        .WithMany("characterEpisodes")
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RickAndMortyApi.DAL.Entities.Episode", null)
-                        .WithMany()
-                        .HasForeignKey("EpisodesId")
+                    b.HasOne("RickAndMortyApi.DAL.Entities.Episode", "Episode")
+                        .WithMany("characterEpisodes")
+                        .HasForeignKey("EpisodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Episode");
+                });
+
+            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.Character", b =>
+                {
+                    b.Navigation("characterEpisodes");
+                });
+
+            modelBuilder.Entity("RickAndMortyApi.DAL.Entities.Episode", b =>
+                {
+                    b.Navigation("characterEpisodes");
                 });
 #pragma warning restore 612, 618
         }

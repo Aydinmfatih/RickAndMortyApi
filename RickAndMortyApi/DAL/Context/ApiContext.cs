@@ -11,5 +11,6 @@ namespace RickAndMortyApi.DAL.Context
         }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
+        public DbSet<CharacterEpisode> CharacterEpisodes { get; set; }
     }
 }
