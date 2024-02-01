@@ -2,6 +2,7 @@
 Bu proje Konuşarak Öğren FullStack Stajer Programı Projesidir.
 Backend olarak ASP .Net Core Web API
 Frontend olarak ASP .Net Core MVc kullanılmıştır.
+*Projede verilen bütün maddeler uygulanmıştır.*
 
 ## Proje hakkında 
 Verilen Api daki verileri kendi local database'ime kaydedip Api Oluşturulmuştur. Bu Api MVC Projesinde Consume edilerek gerekli ilişkilerle gelen verileri doğru bir şekilde listelenmiştir.
