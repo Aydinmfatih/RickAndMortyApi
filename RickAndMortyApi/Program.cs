@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NuGet.Configuration;
 using RickAndMortyApi.DAL.Context;
 using System.Configuration;
 using System.Reflection;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddDbContext<ApiContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

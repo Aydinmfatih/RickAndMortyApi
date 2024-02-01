@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RickAndMortyApi", "RickAndMortyApi\RickAndMortyApi.csproj", "{B6A14268-31B9-4677-B32E-5ACD5AF3074E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RickAndMortyWebUI", "RickAndMortyApi\RickAndMortyWebUI.csproj", "{B6A14268-31B9-4677-B32E-5ACD5AF3074E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RickAndMortyWebApi", "RickAndMortyWebApi\RickAndMortyWebApi.csproj", "{C83B8EA3-680B-473F-8F90-A15C95793A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RickAndMortyWebApi", "RickAndMortyWebApi\RickAndMortyWebApi.csproj", "{C83B8EA3-680B-473F-8F90-A15C95793A78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

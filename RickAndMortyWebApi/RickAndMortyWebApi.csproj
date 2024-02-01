@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RickAndMortyApi\RickAndMortyApi.csproj" />
+    <ProjectReference Include="..\RickAndMortyApi\RickAndMortyWebUI.csproj" />
   </ItemGroup>
 
 </Project>

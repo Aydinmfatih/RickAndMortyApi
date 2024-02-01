@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using NuGet.Configuration;
 using RickAndMortyApi.DAL.Context;
 using RickAndMortyApi.Dtos;
+using RickAndMortyWebUI.Authentication;
 using X.PagedList;
 
 namespace RickAndMortyApi.Controllers
@@ -10,11 +13,13 @@ namespace RickAndMortyApi.Controllers
     {
         private readonly IHttpClientFactory _client;
         private readonly ApiContext _context;
+        private readonly string _apiKey;
 
-        public CharacterController(IHttpClientFactory httpClientFactory, ApiContext context)
+        public CharacterController(ApiContext context, IOptions<ApiSettings> apiSettings, IHttpClientFactory client)
         {
-            _client = httpClientFactory;
             _context = context;
+            _apiKey = apiSettings.Value.ApiKey;
+            _client = client;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
@@ -23,12 +28,15 @@ namespace RickAndMortyApi.Controllers
             ViewBag.t2 = "Karakterler";
             using (var client = _client.CreateClient())
             {
-                // Episode bilgilerini API'den çekme
+                
                 var characterRequest = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
-                    RequestUri = new Uri("https://localhost:7262/api/Character")
+                    RequestUri = new Uri("https://localhost:7262/api/Character"),
+
                 };
+                characterRequest.Headers.Add("X-API-Key", _apiKey);
+
 
                 using (var episodeResponse = await client.SendAsync(characterRequest))
                 {
@@ -54,6 +62,7 @@ namespace RickAndMortyApi.Controllers
                     Method = HttpMethod.Get,
                     RequestUri = new Uri($"https://localhost:7262/api/Character/{id}/")
                 };
+                characterRequest.Headers.Add("X-API-Key", _apiKey);
 
                 using (var value = await client.SendAsync(characterRequest))
                 {
@@ -65,9 +74,9 @@ namespace RickAndMortyApi.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ToggleFavorite(int characterId)
+        public IActionResult ToggleFavorite(int id)
         {
-            var character = _context.Characters.FirstOrDefault(x => x.CharacterId == characterId);
+            var character = _context.Characters.FirstOrDefault(x => x.CharacterId == id);
             if (character != null)
             {
                 if (character.IsFavorite)
@@ -93,6 +102,25 @@ namespace RickAndMortyApi.Controllers
 
             }
             return Json(new { Success = false, Message = "Karakter bulunamadı." });
+        }
+        [HttpGet]
+        public IActionResult Favorites()
+        {
+            ViewBag.t = "Favori Karakterler";
+            ViewBag.t1 = "Anasayfa";
+            ViewBag.t2 = "Favori Karakterler";
+            var values = _context.Characters.Where(x => x.IsFavorite == true).ToList();
+            return View(values);
+
+        }
+        [HttpGet]
+        public IActionResult DeleteCharacter(int id)
+        {
+            var value = _context.Characters.FirstOrDefault(x => x.CharacterId == id);
+            value.IsFavorite = false;
+            _context.SaveChanges();
+            return RedirectToAction("Favorites");
+
         }
         public IActionResult Search(string search)
         {

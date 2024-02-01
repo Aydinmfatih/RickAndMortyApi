@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RickAndMortyApi.DAL.Context;
 using RickAndMortyApi.DAL.Entities;
 using RickAndMortyApi.Dtos;
 using RickAndMortyApi.Models;
+using RickAndMortyWebUI.Authentication;
 using X.PagedList;
 
 namespace RickAndMortyApi.Controllers
@@ -15,11 +17,13 @@ namespace RickAndMortyApi.Controllers
     {
         private readonly IHttpClientFactory _client;
         private readonly ApiContext _context;
+        private readonly string _apiKey;
 
-        public EpisodeController(IHttpClientFactory httpClientFactory, ApiContext context)
+        public EpisodeController(ApiContext context, IOptions<ApiSettings> apiSettings, IHttpClientFactory client)
         {
-            _client = httpClientFactory;
             _context = context;
+            _apiKey = apiSettings.Value.ApiKey;
+            _client = client;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
@@ -33,7 +37,7 @@ namespace RickAndMortyApi.Controllers
                     Method = HttpMethod.Get,
                     RequestUri = new Uri("https://localhost:7262/api/Episode")
                 };
-
+                episodeRequest.Headers.Add("X-API-Key", _apiKey);
                 using (var episodeResponse = await client.SendAsync(episodeRequest))
                 {
                     episodeResponse.EnsureSuccessStatusCode();
@@ -59,6 +63,7 @@ namespace RickAndMortyApi.Controllers
                     Method = HttpMethod.Get,
                     RequestUri = new Uri($"https://localhost:7262/api/Episode/{id}/")
                 };
+                episodeRequest.Headers.Add("X-API-Key", _apiKey);
 
                 using (var value = await client.SendAsync(episodeRequest))
                 {

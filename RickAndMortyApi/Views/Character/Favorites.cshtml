@@ -1,0 +1,35 @@
+﻿@model List<Character>
+@{
+    ViewData["Title"] = "Favorites";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+
+<br />
+<div class="container">
+    <h1>Favori Karakterler</h1>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Resim</th>
+                <th scope="col">Karakter Adı</th>
+                <th scope="col">Karakter Cinsiyeti</th>
+                <th scope="col">Karakter Detay Sayfası</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var value in Model)
+            {
+                <tr>
+                    <td><img style="width:50px;height:50px" src="@value.Image" /></td>
+                    <td>@value.Name</td>
+                    <td>@value.Gender</td>
+                    <td><a href="/Character/GetCharacterById/@value.CharacterId" class="btn btn-primary">Karaktere git</a></td>
+                    <td><a href="/Character/DeleteCharacter/@value.CharacterId" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

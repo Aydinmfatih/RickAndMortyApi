@@ -42,6 +42,7 @@
 <div class="container mt-5" id="episodeContainer">
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Ara">
     <div class="row">
+       
         @foreach (var item in Model)
         {
 
@@ -55,9 +56,10 @@
 
                         <p class="card-text">:  @item.Species </p>
                         <a href="/Character/GetCharacterById/@item.CharacterId" class="btn btn-primary">Karaktere git</a>
-                        <form method="post">
-                            <a href="/Character/ToggleFavorite/@item.CharacterId" class="btn btn-secondary favorite-toggle-btn">
-                                @if (item.IsFavorite==true)
+                       
+                        <form id="favoriteForm" method="post">
+                            <a href="javascript:void(0);" class="btn btn-secondary favorite-toggle-btn" onclick="toggleFavorite('@item.CharacterId')">
+                                @if (item.IsFavorite == true)
                                 {
                                     <span style="color:blue">Favoriden Kaldır</span>
                                 }
@@ -68,10 +70,7 @@
                             </a>
 
                             <input type="hidden" name="CharacterId" value="@item.CharacterId" />
-
                         </form>
-                       
-                        
                     </div>
                 </div>
             </div>
@@ -84,7 +83,7 @@
     </div>
 
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
@@ -138,4 +137,32 @@
     });
    
 
+</script>
+
+<script>
+    function toggleFavorite(characterId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Character/ToggleFavorite/' + characterId,
+            success: function (data) {
+                // Check if the toggle was successful
+                if (data && data.Success) {
+                    // Handle success response
+                    console.log(data);
+
+                    // Check if the number of favorites is greater than 10
+                    if (data.favoriteCount && data.favoriteCount > 10) {
+                        alert("Favori karakter ekleme sayısını aştınız. Başka bir karakteri favorilerden çıkarmalısınız.");
+                    }
+                } else {
+                    // Handle failure response
+                    alert("Favori karakter ekleme sayısını aştınız. Başka bir karakteri favorilerden çıkarmalısınız.");
+                }
+            },
+            error: function (error) {
+                // Handle error response
+                console.error(error);
+            }
+        });
+    }
 </script>
