@@ -21,10 +21,15 @@ Verilen Api daki verileri kendi local database'ime kaydedip Api Oluşturulmuştu
 * Favoriler sayfasında favoriye alınmış karakterler listelendi.
 * Favoriler sayfasında karakterlerin detayına gitme ve favori karakteri silme butonu eklendi
 ## Ekran Görüntüleri
+## Bölümler
 ![Ekran görüntüsü 2024-02-01 041110](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/6e6cb19f-a632-4c9d-b8ef-5cdb70d9cc80)
+## Bölümler
 ![Ekran görüntüsü 2024-02-01 041151](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/6d629c0e-578e-419a-bc25-6c80482ec37b)
+## Bölümler
 ![Ekran görüntüsü 2024-02-01 041235](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/bfb99729-3604-45b5-b29d-68ced0b07c88)
+## Bölüm Detayı
 ![Ekran görüntüsü 2024-02-01 041313](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/8d9a422c-eb01-4b31-a078-c46a1578b6ad)
+## Bölüm Detayı
 ![Ekran görüntüsü 2024-02-01 041347](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/aa4b4448-b5bd-409e-9bd5-813607fbbc0e)
 ![Ekran görüntüsü 2024-02-01 041430](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/a789841e-9c29-4d23-afec-a0d89db55fbe)
 ![Ekran görüntüsü 2024-02-01 041520](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/eda1d819-8687-47a0-bb63-3354ff375d02)
