@@ -33,9 +33,14 @@ Verilen Api daki verileri kendi local database'ime kaydedip Api Oluşturulmuştu
 ![Ekran görüntüsü 2024-02-01 041347](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/aa4b4448-b5bd-409e-9bd5-813607fbbc0e)
 ## Bölüm Detayı
 ![Ekran görüntüsü 2024-02-01 041430](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/a789841e-9c29-4d23-afec-a0d89db55fbe)
+## Karakterler
 ![Ekran görüntüsü 2024-02-01 041520](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/eda1d819-8687-47a0-bb63-3354ff375d02)
+## Karakterler
 ![Ekran görüntüsü 2024-02-01 041606](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/5771c414-7354-478f-ba54-09cbfcc863ee)
+## Karakterler
 ![Ekran görüntüsü 2024-02-01 041639](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/c4859c53-d8d0-4650-939e-0bf8c0e39d24)
+## Karakter Detayı
 ![Ekran görüntüsü 2024-02-01 041705](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/4d5627ae-fcf3-4c4a-b863-49f45c9eae9a)
+## Favoriler
 ![Ekran görüntüsü 2024-02-01 041748](https://github.com/Aydinmfatih/RickAndMortyApi/assets/46519508/0d9be580-5beb-47b7-8c83-6eeafb1c8a71)
 
